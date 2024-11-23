@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ag_app/utils/ag_liste.dart';
-import 'detailed_page.dart';
+import 'adding_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(context
                       , MaterialPageRoute(
-                        builder: (context) => const DetailedPage(),
+                        builder: (context) => const AddingPage(),
                         )
                         );
                   },
