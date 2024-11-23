@@ -1,22 +1,21 @@
-import 'package:ag_app/pages/home_page.dart';
+import 'home_page.dart';
 import 'package:flutter/material.dart';
 
-
-class AddingPage extends StatelessWidget {
-  const AddingPage({super.key});
+class DetailedPage extends StatelessWidget {
+  const DetailedPage({super.key});
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AGs hinzufügen'
+        title: const Text('AG-Beschreibung'
         ),
         backgroundColor: Colors.lightBlue.shade300,
         foregroundColor: Colors.white,
       ),
       body: const Center(
-        child: Text('Hier kann man die AGs bearbeiten')
+        child: Text('Hier sind die AGs näher beschrieben')
       )
     );
   }
