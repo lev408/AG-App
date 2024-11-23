@@ -8,7 +8,10 @@ class DetailedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Neue Seite'),
+        title: const Text('AGs hinzufügen'
+        ),
+        backgroundColor: Colors.lightBlue.shade300,
+        foregroundColor: Colors.white,
       ),
       body: const Center(
         child: Text('das ist die neue Seite',

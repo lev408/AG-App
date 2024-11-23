@@ -86,7 +86,13 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(width: 10),
                 FloatingActionButton(
-                  onPressed: saveNewAg,
+                  onPressed: () {
+                    Navigator.push(context
+                      , MaterialPageRoute(
+                        builder: (context) => const DetailedPage(),
+                        )
+                        );
+                  },
                   child: const Icon(Icons.add),
                 ),
               ],
