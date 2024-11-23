@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ag_app/utils/ag_liste.dart';
+import 'detailed_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
