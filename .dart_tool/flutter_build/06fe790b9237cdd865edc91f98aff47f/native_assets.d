@@ -1,0 +1,1 @@
+ /Users/renguopang/Documents/GitHub/AG-App/.dart_tool/flutter_build/06fe790b9237cdd865edc91f98aff47f/native_assets.yaml: 
