@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ag_app/utils/ag_liste.dart';
 import 'adding_page.dart';
+import 'detailed_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,59 +10,96 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Liste für AGs
-  List<List<dynamic>> AGs = [];
+  List<Map<String, String>> AGs = [];
 
-  // Methode, um neue AG hinzuzufügen
-  void addAg(String agName) {
-    setState(() {
-      if (agName.trim().isNotEmpty) {
-        AGs.add([agName, false]);
-      }
-    });
+  void openAddingPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddingPage(),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        AGs.add({
+          'title': result['title'],
+          'description': result['description'],
+        });
+      });
+    }
+  }
+
+  void openDetailedPage(String title, String description) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailedPage(
+          title: title,
+          description: description,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'AG-APP',
-        ),
+        title: const Text('AG-APP'),
         backgroundColor: Colors.lightBlue.shade300,
         foregroundColor: Colors.white,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: AGs.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                  child: AgListe(
-                    taskName: AGs[index][0],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: AGs.length,
+          itemBuilder: (context, index) {
+            final ag = AGs[index];
+            return GestureDetector(
+              onTap: () => openDetailedPage(ag['title']!, ag['description']!),
+              child: Card(
+                elevation: 3, // Schatteneffekt
+                margin: const EdgeInsets.symmetric(vertical: 8), // Abstand
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.workspaces_filled,
+                        color: Colors.lightBlue.shade300,
+                        size: 40,
+                      ),
+                      const SizedBox(width: 16), // Abstand zwischen Icon und Text
+                      Expanded(
+                        child: Text(
+                          ag['title']!,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios, // Hinweis auf Weiterleitung
+                        size: 16,
+                        color: Colors.black54,
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
-          ),
-        ],
+                ),
+              ),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Navigation zur AddingPage und Rückgabe der Eingabe
-          final newAg = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddingPage()),
-          );
-
-          // Falls ein Wert zurückgegeben wird, zur Liste hinzufügen
-          if (newAg != null && newAg is String) {
-            addAg(newAg);
-          }
-        },
+        onPressed: openAddingPage,
         child: const Icon(Icons.add),
+        backgroundColor: Colors.lightBlue.shade300,
       ),
     );
   }
