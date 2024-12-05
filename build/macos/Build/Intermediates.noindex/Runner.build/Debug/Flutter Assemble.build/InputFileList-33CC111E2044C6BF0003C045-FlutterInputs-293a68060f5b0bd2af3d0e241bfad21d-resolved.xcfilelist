@@ -1,6 +1,3 @@
-/Applications/development/flutter/ag_app/lib/main.dart
-/Applications/development/flutter/ag_app/lib/pages/home_page.dart
-/Applications/development/flutter/ag_app/pubspec.yaml
 /Applications/development/flutter/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf
 /Applications/development/flutter/flutter/bin/cache/pkg/sky_engine/LICENSE
 /Applications/development/flutter/flutter/bin/internal/engine.version
@@ -766,3 +763,9 @@
 /Users/renguopang/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib/src/vector_math_64/vector4.dart
 /Users/renguopang/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib/vector_math_64.dart
 /Users/renguopang/.pub-cache/hosted/pub.dev/vm_service-14.2.5/LICENSE
+/Users/renguopang/Documents/GitHub/AG-App/lib/main.dart
+/Users/renguopang/Documents/GitHub/AG-App/lib/pages/adding_page.dart
+/Users/renguopang/Documents/GitHub/AG-App/lib/pages/detailed_page.dart
+/Users/renguopang/Documents/GitHub/AG-App/lib/pages/home_page.dart
+/Users/renguopang/Documents/GitHub/AG-App/lib/utils/ag_liste.dart
+/Users/renguopang/Documents/GitHub/AG-App/pubspec.yaml
