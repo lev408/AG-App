@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ag_app/utils/ag_liste.dart';
-import 'detailed_page.dart';
 import 'adding_page.dart';
+import 'detailed_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,95 +10,96 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _controller = TextEditingController();
+  List<Map<String, String>> AGs = [];
 
-  // Liste für AGs, die nur während der aktuellen Sitzung gespeichert wird
-  List<List<dynamic>> AGs = [];
+  void openAddingPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddingPage(),
+      ),
+    );
 
-  // Neue AG speichern
-  void saveNewAg() {
-    setState(() {
-      if (_controller.text.trim().isNotEmpty) {
-        AGs.add([_controller.text, false]);
-        _controller.clear();  // Löscht das Eingabefeld nach dem Hinzufügen
-      }
-    });
+    if (result != null) {
+      setState(() {
+        AGs.add({
+          'title': result['title'],
+          'description': result['description'],
+        });
+      });
+    }
   }
 
-  // Wenn die Enter-Taste gedrückt wird, wird ein neuer AG-Eintrag hinzugefügt
-  void onSubmit(String value) {
-    saveNewAg();  // Ruft die Methode auf, die auch beim Drücken des Buttons verwendet wird
+  void openDetailedPage(String title, String description) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailedPage(
+          title: title,
+          description: description,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'AG-APP',
-        ),
+        title: const Text('AG-APP'),
         backgroundColor: Colors.lightBlue.shade300,
         foregroundColor: Colors.white,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: AGs.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),  // Abstand zwischen den Blöcken verringert
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: AGs.length,
+          itemBuilder: (context, index) {
+            final ag = AGs[index];
+            return GestureDetector(
+              onTap: () => openDetailedPage(ag['title']!, ag['description']!),
+              child: Card(
+                elevation: 3, // Schatteneffekt
+                margin: const EdgeInsets.symmetric(vertical: 8), // Abstand
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
+                      Icon(
+                        Icons.workspaces_filled,
+                        color: Colors.lightBlue.shade300,
+                        size: 40,
+                      ),
+                      const SizedBox(width: 16), // Abstand zwischen Icon und Text
                       Expanded(
-                        child: AgListe(
-                          taskName: AGs[index][0],  // Anzeige des AG-Namens
+                        child: Text(
+                          ag['title']!,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios, // Hinweis auf Weiterleitung
+                        size: 16,
+                        color: Colors.black54,
                       ),
                     ],
                   ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Neue AG hinzufügen',
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    onSubmitted: onSubmit,  // Füge die onSubmitted-Funktion hinzu
-                  ),
                 ),
-                const SizedBox(width: 10),
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(context
-                      , MaterialPageRoute(
-                        builder: (context) => const AddingPage(),
-                        )
-                        );
-                  },
-                  child: const Icon(Icons.add),
-                ),
-              ],
-            ),
-          ),
-        ],
+              ),
+            );
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: openAddingPage,
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.lightBlue.shade200,
       ),
     );
   }
